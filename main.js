@@ -1,29 +1,45 @@
- function insertDashes(str) {
-  const spaceIdx = str.search(/\s/)
-  const dashMap = [...str].map((char, idx) => {
-    if (idx === spaceIdx - 1 || idx === spaceIdx) {
-      return char
-    } else {
-      return char + '-'
-    }
+function add(...params) {
+  return params.reduce((prev, current) => {
+    return prev + current
   })
-  return dashMap.join('').slice(0, -1)
 }
 
+fdescribe('add()', () => {
+  it('adds two numbers together', () => {
+    // arrange
+  const num1 = 4
+  const num2 = 8
 
-describe('insertDashes()', () => {
-  it('insert dashes in between chars', () => {
-      // arrange
-      const value = "aba caba";
-      
-      // act
-      const result = insertDashes(value);
+  // act
+  const result = add(num1, num2)
 
-      // log
-      console.log("result: ", result);
-      
-      // assert
-      expect(result).toBe("a-b-a c-a-b-a");
-  });
-});
+  // assert
+  expect(result).toBe(12)
+  })
+
+  it('adds three numbers together', () => {
+    // arrange
+  const num1 = 1308
+  const num2 = 548
+  const num3 = 321
+
+  // act
+  const result = add(num1, num2, num3)
+
+  // assert
+  expect(result).toBe(2177)
+  })
+
+  it('adds two negative numbers together', () => {
+    // arrange
+  const num1 = -67
+  const num2 = -75
+
+  // act
+  const result = add(num1, num2)
+
+  // assert
+  expect(result).toBe(-142)
+  })
+})
 
