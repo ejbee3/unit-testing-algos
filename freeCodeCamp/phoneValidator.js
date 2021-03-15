@@ -46,7 +46,7 @@ if (!hasTenDigits && !hasElevenDigits) {
 }
 
 describe('phoneValidator()', () => {
-it('example test', () => {
+  it('example test', () => {
 // arrange
   const s = "1 500 456 9685"
 
@@ -55,5 +55,5 @@ it('example test', () => {
 
   // assert
   expect(result).toBe(true)
-})
+  })
 })
