@@ -1,45 +1,29 @@
+// working on recursive function that calls through money until no more change is due
+// i think i should be passing each value ex. ["NICKEL", 5], so passing the 5 as num
+
+
 function checkCashRegister(price, cash, cid) {
   const moneyInTheRegister = parseFloat(cid.reduce((total, current) => total + current[1], 0).toFixed(2))
   let remainder = parseFloat((cash - price).toFixed(2))
   let bigRemainder = remainder * 100
-  let change = []
 
-  if (moneyInTheRegister > remainder) {
     
-    let changeValues = {"PENNY": 1, "NICKEL": 5, "DIME": 10, "QUARTER": 25, "ONE": 100, "FIVE": 500, "TEN": 1000, "TWENTY": 2000, 
-                        "ONE HUNDRED": 10000 }
+    let changeValues = {"PENNY": 0.01, "NICKEL": 0.05, "DIME": 0.1, "QUARTER": 0.25, "ONE": 1, "FIVE": 5, "TEN": 10, "TWENTY": 20, 
+                        "ONE HUNDRED": 100 }
     let changeValuesArr = Object.entries(changeValues)
-    while (bigRemainder !== 0) {
-      for (let i = 0; i < changeValuesArr.length; i++) {
-        if (bigRemainder < changeValuesArr[i][1]) {
-          const amountInDrawer = cid[i - 1][1] * 100
-          console.log(amountInDrawer)
-          const leftover = amountInDrawer - bigRemainder
-          if (leftover > 0) {
-            change.push([changeValuesArr[i - 1][0], bigRemainder])
-            return {status: 'OPEN', change}
-          } else {
-            bigRemainder -= amountInDrawer
-            
-            change.push([changeValuesArr[i - 1][0], parseFloat(Math.ceil(amountInDrawer / 100))])
-            
-          }
-        }
-      }
-    }
+    let countInRegister = Object.entries(changeValues).map(([den, val], idx) => [den, parseFloat((cid[idx][1] / val).toFixed(2))])
+    console.log(countInRegister)
     
-    
-
-  } else if (moneyInTheRegister === remainder) {
+   if (moneyInTheRegister === remainder) {
     return {status: "CLOSED", change: cid}
   }
 
-  function findChangeForValue(total, valueInDrawer) {
+  function findChangeForValue(total, value) {
     if (total === 0) {
       return [0]
     } else {
-      let drawer = findChangeForValue(total - valueInDrawer, valueInDrawer)
-      drawer.push(drawer[drawer.length - 1] + valueInDrawer)
+      let drawer = findChangeForValue(total - value, value)
+      drawer.push(drawer[drawer.length - 1] + value)
       return drawer
     }
   }
@@ -76,11 +60,6 @@ describe('checkCashRegister()', () => {
       expect(result).toEqual({status: "OPEN", change: [["TWENTY", 60], ["TEN", 20], ["FIVE", 15], ["ONE", 1], ["QUARTER", 0.5], ["DIME", 0.2], ["PENNY", 0.04]]})
     })
 })
-
-
-// working on recursive function that calls through money until no more change is due
-// i think i should be passing each value ex. ["NICKEL", 5], so passing the 5 as num
-
 // function findChangeForValue(total, num) {
 //   if (total === 0) {
 //     return [0]

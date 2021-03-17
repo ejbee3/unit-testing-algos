@@ -1,1 +1,2 @@
-// You can do anything you set your mind to, besides go to the moon of course.
+// make sure you check if the kata has already been created, you 🦢
+// theres no goose emoji :(
